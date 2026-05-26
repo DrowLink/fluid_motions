@@ -4,6 +4,8 @@
 [![Flutter Tests](https://img.shields.io/badge/Flutter-Tests-success.svg)](#)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+**👉 [Try the Interactive Web Demo!](https://DrowLink.github.io/fluid_motions/) 👈**
+
 A declarative, physics-based animation engine for Flutter. 
 
 Say goodbye to static `Duration`s and rigid `Curves`. **Fluid Motions** brings organic, spring-driven physics to your UI, inspired by Framer Motion. 
