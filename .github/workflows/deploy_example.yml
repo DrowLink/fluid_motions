@@ -1,0 +1,43 @@
+name: Deploy Example to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    # Solo ejecuta este flujo si cambian los archivos fuente o el ejemplo
+    paths:
+      - 'lib/**'
+      - 'example/**'
+      - '.github/workflows/**'
+
+# Otorga permisos al bot de GitHub para subir el código a la rama gh-pages
+permissions:
+  contents: write
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          
+      - name: Install dependencies
+        working-directory: ./example
+        run: flutter pub get
+
+      - name: Build Web
+        working-directory: ./example
+        # El base-href DEBE coincidir con el nombre de tu repositorio en GitHub
+        run: flutter build web --release --base-href /fluid_motions/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./example/build/web
