@@ -112,9 +112,9 @@ class _FluidTransformState extends State<FluidTransform>
         return Transform(
           alignment: widget.alignment,
           transform: Matrix4.identity()
-            ..translate(currentOffset.dx, currentOffset.dy)
-            ..scale(currentScale)
-            ..rotateZ(currentRotation),
+            ..multiply(Matrix4.translationValues(currentOffset.dx, currentOffset.dy, 0.0))
+            ..multiply(Matrix4.diagonal3Values(currentScale, currentScale, 1.0))
+            ..multiply(Matrix4.rotationZ(currentRotation)),
           child: child,
         );
       },

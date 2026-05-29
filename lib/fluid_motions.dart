@@ -23,6 +23,8 @@
 ///   child: const SizedBox(width: 100, height: 100),
 /// )
 /// ```
+library;
+
 export 'src/widgets/fluid_container.dart';
 export 'src/widgets/fluid_draggable.dart';
 export 'src/core/fluid_spring_config.dart';

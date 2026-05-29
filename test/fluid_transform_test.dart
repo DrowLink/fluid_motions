@@ -48,8 +48,6 @@ void main() {
       
       transform = getAnimatedTransform(tester);
       // Values should have changed from identity but not yet reached target
-      final matrix = transform.transform;
-      
       // 4. Wait for the spring simulation to completely settle
       await tester.pumpAndSettle();
 

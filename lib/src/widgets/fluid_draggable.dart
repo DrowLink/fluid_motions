@@ -20,10 +20,10 @@ class FluidDraggable extends StatefulWidget {
   ///
   /// The [child] and [returnSpring] arguments must not be null.
   const FluidDraggable({
-    Key? key,
+    super.key,
     required this.child,
     required this.returnSpring,
-  }) : super(key: key);
+  });
 
   @override
   State<FluidDraggable> createState() => _FluidDraggableState();
