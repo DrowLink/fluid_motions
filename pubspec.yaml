@@ -1,6 +1,6 @@
 name: fluid_motions
 description: A declarative, physics-based fluid animation and gesture package for Flutter, inspired by Framer Motion.
-version: 0.0.1 #alpha version
+version: 0.0.2
 homepage: https://github.com/DrowLink/fluid_motions 
 repository: https://github.com/DrowLink/fluid_motions
 
