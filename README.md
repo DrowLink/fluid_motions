@@ -96,6 +96,24 @@ final smooth = FluidSpringConfig.smooth();
 final custom = FluidSpringConfig(mass: 1.0, stiffness: 120.0, damping: 15.0);
 ```
 
+### `FluidInteractable` (New & Magical ✨)
+Add Apple-like physical interactions to any button, card, or icon instantly. It automatically tracks **Hover** and **Tap** gestures, and animates its scale and position using continuous spring physics. Say goodbye to manual state management!
+
+```dart
+FluidInteractable(
+  onTap: () => print("Tapped!"),
+  scaleOnHover: 1.05,  // Grow smoothly on mouse hover
+  scaleOnTap: 0.90,    // Shrink organically on tap
+  offsetOnHover: const Offset(0, -5), // Elevate on hover
+  springConfig: FluidSpringConfig.bouncy(),
+  child: Container(
+    padding: const EdgeInsets.all(16),
+    color: Colors.deepPurple,
+    child: const Text("Interact With Me", style: TextStyle(color: Colors.white)),
+  ),
+)
+```
+
 ### `FluidContainer`
 A declarative widget that morphs its `BoxDecoration` between `inactiveDecoration` and `activeDecoration` smoothly using physics when `isActive` changes.
 
