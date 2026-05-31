@@ -1,124 +1,119 @@
-# Fluid Motions 🌊
+# Fluid Motions
 
 [![Pub Version](https://img.shields.io/pub/v/fluid_motions.svg)](https://pub.dev/packages/fluid_motions)
-[![Flutter Tests](https://img.shields.io/badge/Flutter-Tests-success.svg)](#)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-**👉 [Try the Interactive Web Demo!](https://DrowLink.github.io/fluid_motions/) 👈**
+**[Interactive Web Demo](https://DrowLink.github.io/fluid_motions/)**
 
-A declarative, physics-based animation engine for Flutter. 
+A declarative, physics-based animation engine for Flutter, inspired by Framer Motion. 
 
-Say goodbye to static `Duration`s and rigid `Curves`. **Fluid Motions** brings organic, spring-driven physics to your UI, inspired by Framer Motion. 
-
-By leveraging continuous velocity and momentum preservation, animations feel natural, interruptible, and deeply satisfying—just like real-world objects.
+Fluid Motions replaces rigid, duration-based tweens with continuous spring physics. It allows developers to create organic, interruptible animations that conserve momentum and feel deeply satisfying to the touch.
 
 ---
 
-## 🌟 Why Fluid Motions?
+## Why Fluid Motions?
 
-In traditional Flutter animations (`AnimatedContainer`, `Tween`, etc.), animations run for a hardcoded time (e.g., `300ms`). If a user interrupts the animation halfway through, the object abruptly stops and restarts, killing momentum.
+Traditional Flutter animations run for a hardcoded time (e.g., `300ms`). If a user interrupts the animation halfway through, the object abruptly stops and restarts, killing momentum.
 
 **Fluid Motions** solves this by using `SpringSimulation` under the hood:
-* **Physics, not durations**: Animations finish when they *naturally* settle, based on Mass, Stiffness, and Damping.
+* **Physics, not durations**: Animations finish when they naturally settle, based on Mass, Stiffness, and Damping.
 * **Momentum Preservation**: Interrupting an animation mid-flight redirects it smoothly, conserving its current velocity.
-* **True Overshoot**: Elements can organically stretch past their bounds (bouncing) without complex curve math.
+* **Declarative API**: Wrap any widget with our extensions to add complex interactions without managing state.
 
 ---
 
-## 📦 Installation
+## Installation
 
 Add the dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  fluid_motions: ^0.0.1 # Check pub.dev for the latest version
+  fluid_motions: ^0.0.4
 ```
 
-## 🚀 Quick Start
+---
 
-Replace your traditional `AnimatedContainer` with `FluidContainer`. Notice you don't need to pass any durations!
+## Core Features & Usage
+
+### 1. The Extension API (Recommended)
+The easiest way to add physical interactions to any Flutter widget. By importing the package, your widgets gain access to fluid extension methods.
+
+**`fluidInteractable`**
+Automatically tracks Tap and Hover gestures, animating scale and position using continuous spring physics.
 
 ```dart
-import 'package:flutter/material.dart';
 import 'package:fluid_motions/fluid_motions.dart';
 
-class MyFluidWidget extends StatefulWidget {
-  @override
-  _MyFluidWidgetState createState() => _MyFluidWidgetState();
-}
-
-class _MyFluidWidgetState extends State<MyFluidWidget> {
-  bool _isActive = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => setState(() => _isActive = !_isActive),
-      child: FluidContainer(
-        isActive: _isActive,
-        // 1. Define your physics (or use factories like .bouncy() / .smooth())
-        springConfig: FluidSpringConfig.bouncy(),
-        // 2. Define the inactive state
-        inactiveDecoration: BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        // 3. Define the active state
-        activeDecoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(100),
-        ),
-        child: const SizedBox(
-          width: 200, 
-          height: 200, 
-          child: Center(child: Text('Tap Me!', style: TextStyle(color: Colors.white))),
-        ),
-      ),
-    );
-  }
-}
-```
-
-## ⚙️ Core Concepts
-
-### `FluidSpringConfig`
-The heart of the physics engine. It takes three parameters:
-- **`mass`**: The weight of the object. Heavier objects are harder to move and stop.
-- **`stiffness`**: The tension of the spring. Higher values make the animation snappier and faster.
-- **`damping`**: The friction. Higher values reduce bounce, stopping the spring faster.
-
-```dart
-// Pre-built factories for convenience:
-final bouncy = FluidSpringConfig.bouncy();
-final smooth = FluidSpringConfig.smooth();
-
-// Or create your own custom physics:
-final custom = FluidSpringConfig(mass: 1.0, stiffness: 120.0, damping: 15.0);
-```
-
-### `FluidInteractable` (New & Magical ✨)
-Add Apple-like physical interactions to any button, card, or icon instantly. It automatically tracks **Hover** and **Tap** gestures, and animates its scale and position using continuous spring physics. Say goodbye to manual state management!
-
-```dart
-FluidInteractable(
+Container(
+  padding: const EdgeInsets.all(16),
+  color: Colors.deepPurple,
+  child: const Text("Interact With Me", style: TextStyle(color: Colors.white)),
+).fluidInteractable(
   onTap: () => print("Tapped!"),
-  scaleOnHover: 1.05,  // Grow smoothly on mouse hover
-  scaleOnTap: 0.90,    // Shrink organically on tap
-  offsetOnHover: const Offset(0, -5), // Elevate on hover
+  scaleOnHover: 1.05,
+  scaleOnTap: 0.90,
+  offsetOnHover: const Offset(0, -5), // Elevates smoothly on mouse hover
   springConfig: FluidSpringConfig.bouncy(),
-  child: Container(
-    padding: const EdgeInsets.all(16),
-    color: Colors.deepPurple,
-    child: const Text("Interact With Me", style: TextStyle(color: Colors.white)),
+);
+```
+
+**`fluidDraggable`**
+Makes any widget freely draggable across the screen. When released, it uses a physical spring simulation to return to its origin, conserving the drag velocity.
+
+```dart
+Card(child: Text("Drag me around!")).fluidDraggable();
+```
+
+---
+
+### 2. Declarative State Widgets
+If you prefer explicit state management over extensions, Fluid Motions provides powerful container widgets.
+
+**`FluidContainer`**
+A declarative widget that morphs its `BoxDecoration` smoothly using physics when `isActive` changes.
+
+```dart
+FluidContainer(
+  isActive: _isActive,
+  springConfig: FluidSpringConfig.smooth(),
+  inactiveDecoration: BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(16),
   ),
+  activeDecoration: BoxDecoration(
+    color: Colors.red,
+    borderRadius: BorderRadius.circular(100),
+  ),
+  child: const SizedBox(width: 200, height: 200),
 )
 ```
 
-### `FluidContainer`
-A declarative widget that morphs its `BoxDecoration` between `inactiveDecoration` and `activeDecoration` smoothly using physics when `isActive` changes.
+**`FluidTransform`**
+Animates scale, rotation, and translation based on a binary active/inactive state.
 
-## 🤝 Contributing
-Contributions are welcome! Feel free to open issues or submit Pull Requests to add more fluid widgets (like `FluidTransform`, `FluidFade`, etc.).
+---
 
-## 📄 License
+### 3. Physics Configuration
+
+The heart of the physics engine is the `FluidSpringConfig`. It dictates how the animation feels:
+- **`mass`**: The weight of the object. Heavier objects are harder to move and stop.
+- **`stiffness`**: The tension of the spring. Higher values make the animation snappier and faster.
+- **`damping`**: The friction. Higher values reduce bounce.
+
+```dart
+// Built-in factories for quick prototyping:
+final bouncy = FluidSpringConfig.bouncy();
+final smooth = FluidSpringConfig.smooth();
+
+// Custom configuration:
+final custom = FluidSpringConfig(mass: 1.0, stiffness: 120.0, damping: 15.0);
+```
+
+---
+
+## Contributing
+Contributions are welcome! Feel free to open issues or submit Pull Requests.
+### Email: pauloriveiro01@gmail.com
+
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
