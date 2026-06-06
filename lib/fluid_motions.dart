@@ -30,4 +30,6 @@ export 'src/widgets/fluid_draggable.dart';
 export 'src/widgets/fluid_interactable.dart';
 export 'src/core/fluid_spring_config.dart';
 export 'src/widgets/fluid_transform.dart';
+export 'src/widgets/fluid_switch.dart';
+export 'src/widgets/fluid_action_button.dart';
 export 'src/extensions/fluid_extensions.dart';

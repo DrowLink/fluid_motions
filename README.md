@@ -28,7 +28,7 @@ Add the dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  fluid_motions: ^0.0.4
+  fluid_motions: ^0.0.5
 ```
 
 ---
@@ -107,6 +107,34 @@ final smooth = FluidSpringConfig.smooth();
 
 // Custom configuration:
 final custom = FluidSpringConfig(mass: 1.0, stiffness: 120.0, damping: 15.0);
+```
+
+---
+
+### 4. Ready-to-Use Components
+
+Fluid Motions includes several pre-built UI components that leverage the physics engine out-of-the-box, saving you time while providing premium interactions.
+
+**`FluidActionButton`**
+A highly customizable button that automatically scales down on tap and scales up on hover, using spring physics for a satisfying, premium feel.
+
+```dart
+FluidActionButton(
+  onPressed: () => print("Action triggered!"),
+  backgroundColor: Colors.blueAccent,
+  child: const Text("Save Changes", style: TextStyle(color: Colors.white)),
+)
+```
+
+**`FluidSwitch`**
+A fully animated, physics-based switch. The thumb expands on interaction, and the background color morphs continuously as it toggles.
+
+```dart
+FluidSwitch(
+  value: _isToggled,
+  onChanged: (val) => setState(() => _isToggled = val),
+  activeColor: Colors.green,
+)
 ```
 
 ---

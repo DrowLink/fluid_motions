@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'views/basics_view.dart';
-import 'views/interactions_view.dart';
-import 'views/gestures_view.dart';
+import 'views/mechanisms_view.dart';
+import 'views/widgets_view.dart';
 
 void main() {
   runApp(const FluidMotionsApp());
@@ -25,58 +24,36 @@ class FluidMotionsApp extends StatelessWidget {
   }
 }
 
-class ExamplePage extends StatefulWidget {
+class ExamplePage extends StatelessWidget {
   const ExamplePage({super.key});
 
   @override
-  State<ExamplePage> createState() => _ExamplePageState();
-}
-
-class _ExamplePageState extends State<ExamplePage> {
-  int _viewIndex = 0;
-
-  final List<Widget> _views = [
-    const BasicsView(),
-    const InteractionsView(),
-    const GesturesView(),
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF0F2F5),
-      appBar: AppBar(
-        title: const Text('Fluid Motions', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-      ),
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: _views[_viewIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _viewIndex,
-        selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) => setState(() => _viewIndex = index),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.widgets_outlined),
-            activeIcon: Icon(Icons.widgets),
-            label: 'Basics',
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF0F2F5),
+        appBar: AppBar(
+          title: const Text('Fluid Motions', style: TextStyle(fontWeight: FontWeight.bold)),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          bottom: const TabBar(
+            labelColor: Colors.deepPurple,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.deepPurple,
+            tabs: [
+              Tab(text: 'Mechanisms'),
+              Tab(text: 'Widgets'),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.touch_app_outlined),
-            activeIcon: Icon(Icons.touch_app),
-            label: 'Interactions',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.swipe_outlined),
-            activeIcon: Icon(Icons.swipe),
-            label: 'Gestures',
-          ),
-        ],
+        ),
+        body: const TabBarView(
+          children: [
+            MechanismsView(),
+            WidgetsView(),
+          ],
+        ),
       ),
     );
   }

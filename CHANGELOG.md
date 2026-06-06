@@ -1,3 +1,9 @@
+## 0.0.5
+
+* **✨ NEW**: Added `FluidActionButton`, an interactive fluid action button with hover and tap scale animations.
+* **✨ NEW**: Added `FluidSwitch`, an interactive, fully animated custom switch widget with thumb scaling and color transitions.
+* **Update**: Expanded example app with `Widgets` and `Mechanisms` views to demonstrate the new components and animations in action.
+
 ## 0.0.4
 
 * **Feature**: Introduced the new Extension API (`.fluidInteractable()` and `.fluidDraggable()`) for cleaner, declarative widget wrapping without manual state management.
